@@ -1,12 +1,19 @@
 import { CORE_CONCEPTS } from './data.js';
+import { useState } from 'react'; // hook
+
 import Header from './components/Header/Header.jsx';
 import CoreConcept from './components/CoreConcept.jsx'
 import TabButton from './components/TabButton.jsx';
 
 function App() {
-    // Handle TabButton component click event function, note naming convention
-  function handleSelect() {
-    console.log('hey')
+   // cannot nest state hook in any other compfunction (top-level)
+  const [ selectedTopic, setSelectedTopic ] = useState('Please click a button');
+
+  // Handle TabButton component click event function, note naming convention
+  function handleSelect(selectedButton) {
+    // selectedButton => 'components', 'jsx', 'prop', 'state'
+    setSelectedTopic(selectedButton);
+    // console.log(selectedTopic);
   }
 
   return (
@@ -16,7 +23,7 @@ function App() {
         <section id="core-concepts">
         <h2>Core Concepts</h2>
         <ul>
-          <CoreConcept {...CORE_CONCEPTS[0]} // this will produce the same as below '...' spread operator
+          <CoreConcept {...CORE_CONCEPTS[0]} // this will produce the same as below - '...' spread operator
             // title={CORE_CONCEPTS[0].title}
             // description={CORE_CONCEPTS[0].description}
             // image={CORE_CONCEPTS[0].image}
@@ -29,11 +36,12 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-          <TabButton onSelect={handleSelect} >Components</TabButton>
-          <TabButton onSelect={handleSelect} >JSX</TabButton>
-          <TabButton onSelect={handleSelect} >Props</TabButton>
-          <TabButton onSelect={handleSelect} >State</TabButton>
+            <TabButton onSelect={() => handleSelect('components')} >Components</TabButton>
+            <TabButton onSelect={() => handleSelect('jsx')} >JSX</TabButton>
+            <TabButton onSelect={() => handleSelect('props')} >Props</TabButton>
+            <TabButton onSelect={() => handleSelect('state')} >State</TabButton>
           </menu>
+          {selectedTopic}
         </section>
       </main>
     </div>
