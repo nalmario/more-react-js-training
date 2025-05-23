@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EXAMPLES } from "../data.js";
 import TabButton from "./TabButton.jsx";
+import Section from "./Section.jsx";
 
 export default function Examples() {
   // cannot nest state hook in any other compfunction (top-level)
@@ -14,29 +15,28 @@ export default function Examples() {
   }
 
   return (
-    <section id="examples">
-      <h2>Examples</h2>
+    <Section title="Examples" id="examples">
       <menu>
         <TabButton
           isSelected={selectedTopic === 'components'} // conditional CSS rendering prop
-          onSelect={() => handleSelect('components')} // event handling prop
+          onClick={() => handleSelect('components')} // event handling prop
         >
           Components
         </TabButton>
         <TabButton
           isSelected={selectedTopic === 'jsx'}
-          onSelect={() => handleSelect('jsx')}
+          onClick={() => handleSelect('jsx')}
         >
           JSX
         </TabButton>
         <TabButton
           isSelected={selectedTopic === 'props'}
-          onSelect={() => handleSelect('props')}
+          onClick={() => handleSelect('props')}
         > Props
         </TabButton>
         <TabButton
           isSelected={selectedTopic === 'state'}
-          onSelect={() => handleSelect('state')}
+          onClick={() => handleSelect('state')}
         > State
         </TabButton>
       </menu>
@@ -53,6 +53,6 @@ export default function Examples() {
           </pre>
         </div>
       )}
-    </section>
+    </Section>
   );
 }
