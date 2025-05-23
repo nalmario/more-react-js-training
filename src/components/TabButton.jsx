@@ -1,5 +1,8 @@
-export default function TabButton({children}) {
+export default function TabButton({ children, onSelect }) {
   return (
-    <li><button>{children}</button></li> // 'children' contains anything that comes between component tags (in App.jsx)
+    // event listener props
+    <li>
+      <button onClick={onSelect} >{children}</button>
+    </li> // 'children' contains anything that comes between component tags (in App.jsx)
   )
 }
