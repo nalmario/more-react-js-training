@@ -8,7 +8,7 @@ import TabButton from './components/TabButton.jsx';
 
 function App() {
    // cannot nest state hook in any other compfunction (top-level)
-  const [ selectedTopic, setSelectedTopic ] = useState('components');
+  const [ selectedTopic, setSelectedTopic ] = useState(null);
 
   // Handle TabButton component click event function, note naming convention
   function handleSelect(selectedButton) {
@@ -42,15 +42,19 @@ function App() {
             <TabButton onSelect={() => handleSelect('props')} >Props</TabButton>
             <TabButton onSelect={() => handleSelect('state')} >State</TabButton>
           </menu>
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedTopic].title}</h3>
-            <p>{EXAMPLES[selectedTopic].description}</p>
-            <pre>
-              <code>
-                {EXAMPLES[selectedTopic].code}
-              </code>
-            </pre>
-          </div>
+          {!selectedTopic ? ( // conditional rendering
+            <p>Please select a topic.</p>
+          ) : (
+            <div id="tab-content">
+              <h3>{EXAMPLES[selectedTopic].title}</h3>
+              <p>{EXAMPLES[selectedTopic].description}</p>
+              <pre>
+                <code>
+                  {EXAMPLES[selectedTopic].code}
+                </code>
+              </pre>
+           </div>
+          )}
         </section>
       </main>
     </div>
