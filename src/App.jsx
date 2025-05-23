@@ -1,4 +1,5 @@
 import { CORE_CONCEPTS } from './data.js';
+import { EXAMPLES } from './data.js';
 import { useState } from 'react'; // hook
 
 import Header from './components/Header/Header.jsx';
@@ -7,7 +8,7 @@ import TabButton from './components/TabButton.jsx';
 
 function App() {
    // cannot nest state hook in any other compfunction (top-level)
-  const [ selectedTopic, setSelectedTopic ] = useState('Please click a button');
+  const [ selectedTopic, setSelectedTopic ] = useState('components');
 
   // Handle TabButton component click event function, note naming convention
   function handleSelect(selectedButton) {
@@ -41,7 +42,15 @@ function App() {
             <TabButton onSelect={() => handleSelect('props')} >Props</TabButton>
             <TabButton onSelect={() => handleSelect('state')} >State</TabButton>
           </menu>
-          {selectedTopic}
+          <div id="tab-content">
+            <h3>{EXAMPLES[selectedTopic].title}</h3>
+            <p>{EXAMPLES[selectedTopic].description}</p>
+            <pre>
+              <code>
+                {EXAMPLES[selectedTopic].code}
+              </code>
+            </pre>
+          </div>
         </section>
       </main>
     </div>
