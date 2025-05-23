@@ -24,22 +24,17 @@ function App() {
         <section id="core-concepts">
         <h2>Core Concepts</h2>
         <ul>
-          <CoreConcept {...CORE_CONCEPTS[0]} // this will produce the same as below - '...' spread operator
-            // title={CORE_CONCEPTS[0].title}
-            // description={CORE_CONCEPTS[0].description}
-            // image={CORE_CONCEPTS[0].image}
-          />
-          <CoreConcept {...CORE_CONCEPTS[1]} />
-          <CoreConcept {...CORE_CONCEPTS[2]} />
-          <CoreConcept {...CORE_CONCEPTS[3]} />
+          {CORE_CONCEPTS.map((conceptItem) => ( // .map() is used to output core_concepts array data from data.jsx
+            <CoreConcept key={conceptItem.title} {...conceptItem} /> // key prop is needed for the browser, each child in list must have unique key value
+          ))}
         </ul>
         </section>
         <section id="examples">
           <h2>Examples</h2>
           <menu>
             <TabButton
-              isSelected={selectedTopic === 'components'}
-              onSelect={() => handleSelect('components')}
+              isSelected={selectedTopic === 'components'} // conditional CSS rendering prop
+              onSelect={() => handleSelect('components')} // event handling prop
             >
               Components
             </TabButton>
