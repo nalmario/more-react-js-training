@@ -18,6 +18,7 @@ export default function Examples() {
   return (
     <Section title="Examples" id="examples">
       <Tabs
+        buttonsContainer="menu" // important to use text identifier of the element we want to use
         buttons = {
           <>
             <TabButton
