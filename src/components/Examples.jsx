@@ -6,7 +6,7 @@ import Tabs from "./Tabs.jsx";
 
 export default function Examples() {
   // cannot nest state hook in any other compfunction (top-level)
-  const [ selectedTopic, setSelectedTopic ] = useState(null);
+  const [selectedTopic, setSelectedTopic] = useState(null);
 
   // Handle TabButton component click event function, note naming convention
   function handleSelect(selectedButton) {
@@ -18,33 +18,36 @@ export default function Examples() {
   return (
     <Section title="Examples" id="examples">
       <Tabs
-        buttonsContainer="menu" // important to use text identifier of the element we want to use
-        buttons = {
+        // ButtonsContainer="menu" // important to use text identifier of the element we want to use
+        buttons={
           <>
             <TabButton
-              isSelected={selectedTopic === 'components'} // conditional CSS rendering prop
-              onClick={() => handleSelect('components')} // event handling prop
+              isSelected={selectedTopic === "components"} // conditional CSS rendering prop
+              onClick={() => handleSelect("components")} // event handling prop
             >
               Components
             </TabButton>
             <TabButton
-              isSelected={selectedTopic === 'jsx'}
-              onClick={() => handleSelect('jsx')}
+              isSelected={selectedTopic === "jsx"}
+              onClick={() => handleSelect("jsx")}
             >
               JSX
             </TabButton>
             <TabButton
-              isSelected={selectedTopic === 'props'}
-              onClick={() => handleSelect('props')}
-            > Props
+              isSelected={selectedTopic === "props"}
+              onClick={() => handleSelect("props")}
+            >
+              Props
             </TabButton>
             <TabButton
-              isSelected={selectedTopic === 'state'}
-              onClick={() => handleSelect('state')}
-            > State
+              isSelected={selectedTopic === "state"}
+              onClick={() => handleSelect("state")}
+            >
+              State
             </TabButton>
           </>
-        }>
+        }
+      >
         {!selectedTopic ? ( // conditional rendering
           <p>Please select a topic.</p>
         ) : (
@@ -52,9 +55,7 @@ export default function Examples() {
             <h3>{EXAMPLES[selectedTopic].title}</h3>
             <p>{EXAMPLES[selectedTopic].description}</p>
             <pre>
-              <code>
-                {EXAMPLES[selectedTopic].code}
-              </code>
+              <code>{EXAMPLES[selectedTopic].code}</code>
             </pre>
           </div>
         )}

@@ -1,10 +1,10 @@
-export default function Tabs({ children, buttons, buttonsContainer }) {
-  const ButtonsContainer = buttonsContainer; // must store the prop in a variable to be used as a n element
+export default function Tabs({ children, buttons, ButtonsContainer = "menu" }) {
+  // const ButtonsContainer = buttonsContainer;
 
   return (
     <>
       {/* JSX Commenting Syntax */}
-      <buttonsContainer>{buttons}</buttonsContainer>
+      <ButtonsContainer>{buttons}</ButtonsContainer>
       {children}
     </>
   );
