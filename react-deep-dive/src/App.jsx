@@ -2,6 +2,7 @@ import Player from "./components/Player.jsx";
 import GameBoard from "./components/GameBoard.jsx";
 import Log from "./components/Log.jsx";
 import { useState } from "react";
+import { WINNING_COMBINATIONS } from "./winning-combinations.js";
 
 // Helper function: doesn't need data from state or component, stays outside of component function
 // Returns the current player
