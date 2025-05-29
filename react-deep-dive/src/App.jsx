@@ -1,13 +1,35 @@
 import Player from "./components/Player.jsx";
 import GameBoard from "./components/GameBoard.jsx";
+import Log from "./components/Log.jsx";
 import { useState } from "react";
 
 function App() {
+  // will hold data on the active turn
+  const [gameTurns, setGameTurns] = useState([]);
+
+  // active player symbol
   const [activePlayer, setActivePlayer] = useState("X");
 
-  // Handles what player is currently active after a game board tile is clicked
-  function handleSelectSquare() {
+  // Handles events of a clicked game board tile
+  function handleSelectSquare(rowIndex, colIndex) {
+    // update symbol of current active player
     setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
+
+    // update log data of the turn
+    setGameTurns((prevTurns) => {
+      let currentPlayer = "X";
+
+      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
+        currentPlayer = "O";
+      }
+
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+
+      return updatedTurns;
+    });
   }
 
   return (
@@ -26,12 +48,9 @@ function App() {
             isActive={activePlayer === "O"}
           />
         </ol>
-        <GameBoard
-          onSelectSquare={handleSelectSquare}
-          activePlayerSymbol={activePlayer}
-        />
+        <GameBoard onSelectSquare={handleSelectSquare} turns={gameTurns} />
       </div>
-      LOGS
+      <Log turns={gameTurns} />
     </main>
   );
 }
