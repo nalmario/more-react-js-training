@@ -3,25 +3,36 @@ import GameBoard from "./components/GameBoard.jsx";
 import Log from "./components/Log.jsx";
 import { useState } from "react";
 
+// Helper function: doesn't need data from state or component, stays outside of component function
+// Returns the current player
+function deriveActivePlayer(gameTurns) {
+  let currentPlayer = "X";
+
+  // checks if the game has started and if it's the most recent turn
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+
+  return currentPlayer;
+}
+
 function App() {
   // will hold data on the active turn
   const [gameTurns, setGameTurns] = useState([]);
 
-  // active player symbol
-  const [activePlayer, setActivePlayer] = useState("X");
+  // // active player symbol
+  // const [activePlayer, setActivePlayer] = useState("X");
+  const activePlayer = deriveActivePlayer(gameTurns);
 
-  // Handles events of a clicked game board tile
+  //  Handles events of a clicked game board tile
   function handleSelectSquare(rowIndex, colIndex) {
-    // update symbol of current active player
-    setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
+    // // update symbol of current active player
+    // setActivePlayer((curActivePlayer) => (curActivePlayer === "X" ? "O" : "X"));
 
     // update log data of the turn
     setGameTurns((prevTurns) => {
-      let currentPlayer = "X";
-
-      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
-        currentPlayer = "O";
-      }
+      // uses helper function to get the current player
+      const currentPlayer = deriveActivePlayer(prevTurns);
 
       const updatedTurns = [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
