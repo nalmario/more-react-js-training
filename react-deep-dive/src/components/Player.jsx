@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({
+  initialName,
+  symbol,
+  isActive,
+  onChangeName,
+}) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -8,6 +13,10 @@ export default function Player({ initialName, symbol, isActive }) {
   function handleEditClick() {
     // setIsEditing(!isEditing)
     setIsEditing((editing) => !editing); // BEST PRACTICE: going back and forth between two states, use a function to ensure instant change (bts)
+
+    if (isEditing) {
+      onChangeName(symbol, playerName); // pass symbol to and name to handler function in App.jsx
+    }
   }
 
   // Handles the change of the player name input when editing
