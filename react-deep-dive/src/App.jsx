@@ -5,6 +5,19 @@ import GameOver from "./components/GameOver.jsx";
 import { useState } from "react";
 import { WINNING_COMBINATIONS } from "./winning-combinations.js";
 
+// Players object values
+const PLAYERS = {
+  X: "Player 1",
+  O: "Player 2",
+};
+
+// Initial state of dynamically updating game board
+const INITIAL_GAME_BOARD = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
 // Helper function: doesn't need data from state or component, stays outside of component function
 // Returns the current player
 function deriveActivePlayer(gameTurns) {
@@ -18,29 +31,10 @@ function deriveActivePlayer(gameTurns) {
   return currentPlayer;
 }
 
-// initial state of dynamically updating game board
-const initialGameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
-function App() {
-  // state for holding player information
-  const [players, setPlayers] = useState({
-    X: "Player 1",
-    O: "Player 2",
-  });
-
-  // will hold data on the active turn
-  const [gameTurns, setGameTurns] = useState([]);
-
-  // // active player symbol
-  // const [activePlayer, setActivePlayer] = useState("X");
-  const activePlayer = deriveActivePlayer(gameTurns);
-
+// Returns the gameBoard
+function deriveGameBoard(gameTurns) {
   // make a deep copy of the game board
-  let gameBoard = [...initialGameBoard.map((array) => [...array])];
+  let gameBoard = [...INITIAL_GAME_BOARD.map((array) => [...array])];
 
   for (const turn of gameTurns) {
     const { square, player } = turn;
@@ -49,6 +43,11 @@ function App() {
     gameBoard[row][col] = player;
   }
 
+  return gameBoard;
+}
+
+// Returns the winner
+function deriveWinner(gameBoard, players) {
   let winner;
 
   // use the gameBoard to determine winning combination
@@ -68,6 +67,24 @@ function App() {
       winner = players[firstSquareSymbol];
     }
   }
+
+  return winner;
+}
+
+function App() {
+  // state for holding player information
+  const [players, setPlayers] = useState(PLAYERS);
+
+  // will hold data on the active turn
+  const [gameTurns, setGameTurns] = useState([]);
+
+  // // active player symbol
+  // const [activePlayer, setActivePlayer] = useState("X");
+  const activePlayer = deriveActivePlayer(gameTurns);
+
+  const gameBoard = deriveGameBoard(gameTurns);
+
+  const winner = deriveWinner(gameBoard, players);
 
   const hasDraw = gameTurns.length === 9 && !winner;
 
@@ -111,13 +128,13 @@ function App() {
         <ol id="players" className="highlight-player">
           {/*two completely isolated instances of Player comoponent*/}
           <Player
-            initialName="Player 1"
+            initialName={PLAYERS.X}
             symbol="X"
             isActive={activePlayer === "X"}
             onChangeName={handlePlayerNameChange}
           />
           <Player
-            initialName="Player 2"
+            initialName={PLAYERS.O}
             symbol="O"
             isActive={activePlayer === "O"}
             onChangeName={handlePlayerNameChange}
