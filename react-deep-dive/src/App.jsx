@@ -1,6 +1,7 @@
 import Player from "./components/Player.jsx";
 import GameBoard from "./components/GameBoard.jsx";
 import Log from "./components/Log.jsx";
+import GameOver from "./components/GameOver.jsx";
 import { useState } from "react";
 import { WINNING_COMBINATIONS } from "./winning-combinations.js";
 
@@ -53,7 +54,6 @@ function App() {
     const thirdSquareSymbol =
       gameBoard[combination[2].row][combination[2].column];
 
-    //
     if (
       firstSquareSymbol &&
       firstSquareSymbol === secondSquareSymbol &&
@@ -62,6 +62,8 @@ function App() {
       winner = firstSquareSymbol;
     }
   }
+
+  const hasDraw = gameTurns.length === 9 && !winner;
 
   //  Handles events of a clicked game board tile
   function handleSelectSquare(rowIndex, colIndex) {
@@ -98,7 +100,7 @@ function App() {
             isActive={activePlayer === "O"}
           />
         </ol>
-        {winner && <p>You won, {winner}!</p>}
+        {(winner || hasDraw) && <GameOver winner={winner} />}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <Log turns={gameTurns} />
