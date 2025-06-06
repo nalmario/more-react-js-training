@@ -10,6 +10,7 @@ export default function Player() {
   // Handle button set name button click
   function handleClick() {
     setEnteredPlayerName(playerNameInput.current.value); // can access element properties like 'value'
+    playerNameInput.current.value = "";
   }
 
   return (
@@ -17,7 +18,7 @@ export default function Player() {
       {/* do this if true ?? do this if false */}
       <h2>Welcome {enteredPlayerName ?? "unknown entity"}</h2>
       <p>
-        {/* note ref prop */}
+        {/* note the ref prop */}
         <input ref={playerNameInput} type="text" />
         <button onClick={handleClick}>Set Name</button>
       </p>
